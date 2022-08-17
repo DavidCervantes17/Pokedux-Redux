@@ -4,8 +4,8 @@ import SearchBar from './components/SearchBar';
 import List from './components/List';
 import logo from './statics/logo.svg'
 import { getPokemonsData } from './api';
+import { getPokemonsWithDetails } from './actions';
 import {useEffect} from 'react';
-import { setPokemons } from './actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -17,7 +17,7 @@ function App() {
   useEffect(()=>{
     const getPokemons = async () => {
       const data = await getPokemonsData();
-      dispatch(setPokemons(data));
+      dispatch(getPokemonsWithDetails(data));
     }
     getPokemons();
   },[])

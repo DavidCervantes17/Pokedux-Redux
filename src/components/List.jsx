@@ -7,7 +7,7 @@ const List = ({items}) => {
         <div className="list">
             { items.length > 0 && 
                 items.map((item) => {
-                    return <ItemCard title={item.name} key={item.name} item={item}/>
+                    return <ItemCard title={item.name} key={item.name} item={item} image={item.sprites.front_default} />
                 })
             }
         </div>
