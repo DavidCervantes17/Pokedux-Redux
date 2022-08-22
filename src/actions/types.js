@@ -1,1 +1,3 @@
 export const SET_POKEMONS = 'SET_POKEMONS'
+export const SET_ISLOADING = 'SET_ISLOADING'
+export const SET_FAVORITE = 'SET_FAVORITE'

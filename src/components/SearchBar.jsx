@@ -2,7 +2,7 @@ import {Input} from 'antd';
 
 const SearchBar = () => {
     return (
-        <Input.Search placeholder='Buscar...' />
+        <Input.Search placeholder='Buscar...' style={{marginBottom:10}} />
     )
 }
 
