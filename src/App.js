@@ -11,9 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
 
-  const pokemons = useSelector(state => state.pokemons);
-  const isLoading = useSelector(state => state.loading);
-
+  const pokemons = useSelector(state => state.get('pokemons')).toJS();
+  const isLoading = useSelector(state => state.get('loading'));
   const dispatch = useDispatch();
 
   useEffect(()=>{
