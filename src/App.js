@@ -6,13 +6,14 @@ import logo from './statics/logo.svg'
 import { getPokemonsData } from './api';
 import { getPokemonsWithDetails, setLoading } from './actions';
 import {useEffect} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 
 function App() {
 
-  const pokemons = useSelector(state => state.get('pokemons')).toJS();
-  const isLoading = useSelector(state => state.get('loading'));
+  //shallow equal to prevent unnecesarry render, it checks === but also value, shallow equal is not necesary in booleans
+  const pokemons = useSelector(state => state.getIn(['data','pokemons'], shallowEqual)).toJS();
+  const isLoading = useSelector(state => state.getIn(['data','loading']));
   const dispatch = useDispatch();
 
   useEffect(()=>{
