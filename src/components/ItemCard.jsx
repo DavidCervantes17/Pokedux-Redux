@@ -1,8 +1,8 @@
 import {Alert, Card} from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import { useDispatch } from 'react-redux';
+import { setFavorite } from '../slices/dataSlice';
 import StarButton from './StarButton';
-import {setFavorite} from '../actions/index'
 
 const ItemCard = ({title, image, types, id, favorite}) => {
 

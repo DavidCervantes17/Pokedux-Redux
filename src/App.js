@@ -3,27 +3,22 @@
 import SearchBar from './components/SearchBar';
 import List from './components/List';
 import logo from './statics/logo.svg'
-import { getPokemonsData } from './api';
-import { getPokemonsWithDetails, setLoading } from './actions';
 import {useEffect} from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-
+import { fetchPokemonWithDetails } from './slices/dataSlice';
 
 function App() {
 
   //shallow equal to prevent unnecesarry render, it checks === but also value, shallow equal is not necesary in booleans
-  const pokemons = useSelector(state => state.getIn(['data','pokemons'], shallowEqual)).toJS();
-  const isLoading = useSelector(state => state.getIn(['data','loading']));
+  const pokemons = useSelector(state => state.data.pokemons, shallowEqual);
+    //.getIn(['data','pokemons'], shallowEqual)).toJS();
+  const isLoading =  useSelector(state => state.ui.loading);
+  //useSelector(state => state.ui.logo);
+    //.getIn(['data','loading']));
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    const getPokemons = async () => {
-      dispatch(setLoading(true));
-      const data = await getPokemonsData();
-      dispatch(getPokemonsWithDetails(data));
-      dispatch(setLoading(false));
-    }
-    getPokemons();
+      dispatch(fetchPokemonWithDetails());
   },[])
   
   return (
@@ -35,7 +30,7 @@ function App() {
         <SearchBar/>
       </Col>
       {isLoading && <Col offset={12}>
-        <Spin spinning size='large'/>
+        <Spin style={{marginTop:36}} spinning size='large'/>
       </Col>}
       <List items={pokemons} />
     </div>
