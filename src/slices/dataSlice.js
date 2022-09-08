@@ -1,17 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getPokemonDetails, getPokemonsData } from "../api";
+import { getPokemonDetails, getPokemonsData, setSearchTerm } from "../api";
 import { setLoading } from "./uiSlice";
 
 const initialState = {
-    pokemons: []
+    pokemons: [],
+    pokemonsFiltered: []
 }
 
 export const fetchPokemonWithDetails = createAsyncThunk(
     'data/fetchPokemonWithDetails',
     async (_, {dispatch}) => {
-        //dispatch loarder
-        //fetch
-        //dispatch loader
         dispatch(setLoading(true));
         const data = await getPokemonsData();
         const pokemonDetails = await Promise.all(data.map(pokemon => getPokemonDetails(pokemon)))
@@ -37,10 +35,14 @@ export const dataSlice = createSlice({
         },
         setLoading: (state, action) => {
             state.loading = action.payload
+        },
+        setFilter: (state, action) => {
+            const pokemonsFiltered = state.pokemons.filter(pokemon => pokemon.name.includes(action.payload));
+            state.pokemonsFiltered = pokemonsFiltered;
         }
     }
 })
 
-export const {setFavorite, setPokemons} = dataSlice.actions;
+export const {setFavorite, setPokemons, setFilter} = dataSlice.actions;
 
 export default dataSlice.reducer;

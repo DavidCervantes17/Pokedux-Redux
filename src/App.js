@@ -6,20 +6,23 @@ import logo from './statics/logo.svg'
 import {useEffect} from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { fetchPokemonWithDetails } from './slices/dataSlice';
+import { setFilter } from './slices/dataSlice';
 
 function App() {
 
-  //shallow equal to prevent unnecesarry render, it checks === but also value, shallow equal is not necesary in booleans
   const pokemons = useSelector(state => state.data.pokemons, shallowEqual);
-    //.getIn(['data','pokemons'], shallowEqual)).toJS();
+  const filterPokemons = useSelector(state => state.data.pokemonsFiltered, shallowEqual);
   const isLoading =  useSelector(state => state.ui.loading);
-  //useSelector(state => state.ui.logo);
-    //.getIn(['data','loading']));
+  
   const dispatch = useDispatch();
 
   useEffect(()=>{
       dispatch(fetchPokemonWithDetails());
   },[])
+
+  const handleOnChange = (e) => {
+    dispatch(setFilter(e.target.value));
+  }
   
   return (
     <div className="App">
@@ -27,12 +30,12 @@ function App() {
         <img src={logo} alt="Pokedux"/>
       </Col>
       <Col span={8} offset={8}>
-        <SearchBar/>
+        <SearchBar onChange={handleOnChange}/>
       </Col>
       {isLoading && <Col offset={12}>
         <Spin style={{marginTop:36}} spinning size='large'/>
       </Col>}
-      <List items={pokemons} />
+      <List items={filterPokemons.length > 0 ? filterPokemons : pokemons} />
     </div>
   );
 }

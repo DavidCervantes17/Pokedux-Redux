@@ -1,8 +1,8 @@
 import {Input} from 'antd';
 
-const SearchBar = () => {
+const SearchBar = ({onChange}) => {
     return (
-        <Input.Search placeholder='Buscar...' style={{marginBottom:10}} />
+        <Input.Search onChange={onChange} placeholder='Buscar...' style={{marginBottom:10}} />
     )
 }
 
